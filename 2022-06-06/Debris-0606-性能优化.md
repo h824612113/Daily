@@ -56,3 +56,8 @@
 [移动游戏性能优化通用技法](https://www.cnblogs.com/timlly/p/10463467.html)
 
 [性能分析优化思路](https://blog.uwa4d.com/archives/TechSharing_294.html)
+
+# 对于UIPanel.LateUpdate的优化，主要着眼于UIPanel的布局，其原则如下：
+    尽可能将动态UI元素和静态UI元素分离到不同的UIPanel中（UI的重建以UIPanel为单位），从而尽可能将因为变动的UI元素引起的重构控制在较小的范围内；
+    尽可能让动态UI元素按照同步性进行划分，即运动频率不同的UI元素尽可能分离放在不同的UIPanel中；
+    控制同一个UIPanel中动态UI元素的数量，数量越多，所创建的Mesh越大，从而使得重构的开销显著增加。比如，战斗过程中的HUD运动血条可能会出现较多，此时，建议研发团队将运动血条分离成不同的UIPanel，每组UIPanel下5~10个动态UI为宜。这种做法，其本质是从概率上尽可能降低单帧中UIPanel的重建开销。
